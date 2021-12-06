@@ -16,7 +16,23 @@ function addEventListeners() {
     }
 
     const inclTaxElement = document.getElementById('incl-moms');
-    inclTaxElement.addEventListener('input', calculateFrominclTaxElement);
+    inclTaxElement.addEventListener('input', calculateFromInclTaxElement);
+
+    const exclTaxElement = document.getElementById('excl-moms');
+    exclTaxElement.addEventListener('input', calculateFromExclTaxElement);
+}
+
+function calculateFromExclTaxPrice(event) {
+    // 1. Beräkna värdena vi behöver
+    const priceExcl = Number(event.target.value);
+    const priceIncl = priceExcl * (1 + taxRate);
+    const taxSum = priceExcl * taxRate;
+
+    // 2. Presentera värdena
+    const  inclTaxElement = document.getElementById('incl-moms');
+     inclTaxElement.value = priceIncl;
+     const  taxSumElement = document.getElementById('tax-sum');
+     taxSumElement.value = taxSum;
 }
 
 /**
