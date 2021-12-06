@@ -19,19 +19,22 @@ function addEventListeners() {
     inclTaxElement.addEventListener('input', calculateFromInclTaxElement);
 
     const exclTaxElement = document.getElementById('excl-moms');
-    exclTaxElement.addEventListener('input', calculateFromExclTaxElement);
+    exclTaxElement.addEventListener('input', calculateFromExclTaxElement); 
 }
-
+/**
+ * Calculate incl tax sum presents it to the user
+ * @param {InputEvent} event 
+ */
 function calculateFromExclTaxPrice(event) {
     // 1. Beräkna värdena vi behöver
     const priceExcl = Number(event.target.value);
-    const priceIncl = priceExcl * (1 + taxRate);
-    const taxSum = priceExcl * taxRate;
+    const priceIncl = Number((priceExcl * (1 + taxRate)).toFixed(4));
+    const taxSum = Number((priceExcl * taxRate).toFixed(4));
 
     // 2. Presentera värdena
-    const  inclTaxElement = document.getElementById('incl-moms');
+    const inclTaxElement = document.getElementById('incl-moms');
      inclTaxElement.value = priceIncl;
-     const  taxSumElement = document.getElementById('tax-sum');
+     const taxSumElement = document.getElementById('tax-sum');
      taxSumElement.value = taxSum;
 }
 
@@ -40,16 +43,16 @@ function calculateFromExclTaxPrice(event) {
  * @param {InputEvent} event 
  */
  function calculateFrominclTaxElement(event) {
-     // 1. Beräkna värdena vi behövver
+     // 1. Beräkna värdena vi behöver
      const priceIncl = Number(event.target.value);
-     const priceExcl = priceIncl / (1 + taxRate);
+     const priceExcl = Math.round(priceIncl / (1 + taxRate) * 100) / 100;
      const taxSum = priceIncl - priceExcl;
     
      // 2. Presentera värdena
-     const  exclTaxElement = document.getElementById('excl-moms');
+     const exclTaxElement = document.getElementById('excl-moms');
      exclTaxElement.value = priceExcl;
-     const  taxSumElement = document.getElementById('tax-sum');
-     taxSumElement.value = priceExcl;
+     const taxSumElement = document.getElementById('tax-sum');
+     taxSumElement.value = taxSum;
 }
 
 /**
